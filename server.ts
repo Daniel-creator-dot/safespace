@@ -12,13 +12,17 @@ app.use(express.json());
 const PORT = process.env.PORT || 5000;
 
 // Setup PostgreSQL pool
-const pool = new Pool({
-  user: process.env.DB_USER || 'postgres',
-  host: process.env.DB_HOST || 'localhost',
-  database: process.env.DB_NAME || 'safespace',
-  password: process.env.DB_PASSWORD || 'Admin',
-  port: parseInt(process.env.DB_PORT || '5432'),
-});
+const pool = new Pool(
+  process.env.DATABASE_URL
+    ? { connectionString: process.env.DATABASE_URL }
+    : {
+        user: process.env.DB_USER || 'postgres',
+        host: process.env.DB_HOST || 'localhost',
+        database: process.env.DB_NAME || 'safespace',
+        password: process.env.DB_PASSWORD || 'Admin',
+        port: parseInt(process.env.DB_PORT || '5432'),
+      }
+);
 
 // Database schema and seeding script
 async function initDb() {
