@@ -1,0 +1,6 @@
+{
+  "name": "Safe Space - Academic Consultation Registry",
+  "description": "Safe Space academic advisory and dissertation support intake portal. Allows postgraduate students (PhD and Master's) to register for advisory tracks and custom research support modules, and provides senior consultants with a secure administrator dashboard to track progress, verify proposal synopses, and manage billing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
