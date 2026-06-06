@@ -10,6 +10,7 @@ import { Student, GradeFeeStructure } from './types';
 import { INITIAL_STUDENTS, GRADE_FEES, PREDEFINED_COURSES } from './data';
 import RegistrationForm from './components/RegistrationForm';
 import AdminPortal from './components/AdminPortal';
+import { API_BASE_URL } from './config';
 
 const parseStudentFromBackend = (s: any): Student => ({
   ...s,
@@ -39,9 +40,9 @@ export default function App() {
     async function loadData() {
       try {
         const [studentsRes, feesRes, coursesRes] = await Promise.all([
-          fetch('/api/students'),
-          fetch('/api/grade-fees'),
-          fetch('/api/courses')
+          fetch(`${API_BASE_URL}/api/students`),
+          fetch(`${API_BASE_URL}/api/grade-fees`),
+          fetch(`${API_BASE_URL}/api/courses`)
         ]);
         
         if (!studentsRes.ok || !feesRes.ok || !coursesRes.ok) {
@@ -87,7 +88,7 @@ export default function App() {
   // Sync to backend Grade Fees List
   const handleUpdateGradeFees = async (updatedFees: GradeFeeStructure[]) => {
     try {
-      const res = await fetch('/api/grade-fees', {
+      const res = await fetch(`${API_BASE_URL}/api/grade-fees`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedFees)
@@ -103,7 +104,7 @@ export default function App() {
   // Sync to backend Predefined Courses List
   const handleUpdatePredefinedCourses = async (updatedCourses: { code: string; name: string; cost: number }[]) => {
     try {
-      const res = await fetch('/api/courses', {
+      const res = await fetch(`${API_BASE_URL}/api/courses`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedCourses)
@@ -139,7 +140,7 @@ export default function App() {
     };
 
     try {
-      const res = await fetch('/api/students', {
+      const res = await fetch(`${API_BASE_URL}/api/students`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(studentWithMeta)
@@ -156,7 +157,7 @@ export default function App() {
   // Callback: Update a student's values
   const handleUpdateStudent = async (updatedStudent: Student) => {
     try {
-      const res = await fetch(`/api/students/${updatedStudent.id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/students/${updatedStudent.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedStudent)
@@ -173,7 +174,7 @@ export default function App() {
   // Callback: Add a manually entered student
   const handleAddManualStudent = async (newStudent: Student) => {
     try {
-      const res = await fetch('/api/students', {
+      const res = await fetch(`${API_BASE_URL}/api/students`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newStudent)
@@ -190,7 +191,7 @@ export default function App() {
   // Callback: Delete a student
   const handleDeleteStudent = async (studentId: string) => {
     try {
-      const res = await fetch(`/api/students/${studentId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/students/${studentId}`, {
         method: 'DELETE'
       });
       if (!res.ok) throw new Error('Delete student failed');

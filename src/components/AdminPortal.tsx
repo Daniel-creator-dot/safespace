@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Student, StudentDocument, FeePayment, GradeFeeStructure, AdminUser } from '../types';
 import { calculateTotalFees } from '../data';
+import { API_BASE_URL } from '../config';
 
 interface AdminPortalProps {
   students: Student[];
@@ -56,7 +57,7 @@ export default function AdminPortal({
     if (!currentUser) return;
     async function loadAdmins() {
       try {
-        const res = await fetch('/api/admins');
+        const res = await fetch(`${API_BASE_URL}/api/admins`);
         if (res.ok) {
           const data = await res.json();
           setAdminsList(data);
@@ -437,7 +438,7 @@ export default function AdminPortal({
     }
 
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: loginUsername.trim(), password: loginPassword.trim() })
@@ -486,7 +487,7 @@ export default function AdminPortal({
     };
 
     try {
-      const res = await fetch('/api/admins', {
+      const res = await fetch(`${API_BASE_URL}/api/admins`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newAdmin)
