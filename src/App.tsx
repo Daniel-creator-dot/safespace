@@ -220,7 +220,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-50/50 text-slate-800 font-sans flex flex-col">
       {/* Dynamic Master Headway Bar */}
       <header className="sticky top-0 z-30 bg-white border-b border-slate-100 shadow-3xs backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 min-h-[4rem] py-3 sm:py-0 flex flex-col sm:flex-row items-center justify-between gap-3">
           {/* Logo & Academic emblem */}
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 bg-gradient-to-tr from-blue-600 to-indigo-500 text-white rounded-xl flex items-center justify-center shadow-md shadow-blue-500/20">

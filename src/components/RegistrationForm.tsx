@@ -207,7 +207,7 @@ export default function RegistrationForm({
               }`}>
                 {step > s.num ? '✓' : s.num}
               </div>
-              <span className={`text-xs mt-2 font-medium ${step === s.num ? 'text-slate-800 font-semibold' : 'text-slate-400'}`}>
+              <span className={`text-[10px] sm:text-xs mt-2 font-medium ${step === s.num ? 'text-slate-800 font-semibold' : 'text-slate-400'}`}>
                 {s.label}
               </span>
             </div>

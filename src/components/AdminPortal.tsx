@@ -880,7 +880,7 @@ export default function AdminPortal({
       {activeAdminTab === 'students' && (
         <>
           {/* METRICS ROW */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         {/* Metric 1 */}
         <div className="bg-white p-5 rounded-xl border border-slate-100 shadow-3xs flex items-center gap-4">
           <div className="w-10 h-10 bg-slate-50 text-slate-650 rounded-lg flex items-center justify-center shrink-0">
@@ -1159,7 +1159,7 @@ export default function AdminPortal({
                       <Plus className="w-3.5 h-3.5 text-blue-600" />
                       Client Personal Information
                     </h4>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">First Name *</label>
                         <input
@@ -1181,7 +1181,7 @@ export default function AdminPortal({
                         />
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4 mt-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
                       <div>
                         <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Date of Birth *</label>
                         <input
@@ -1205,7 +1205,7 @@ export default function AdminPortal({
                         </select>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4 mt-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
                       <div>
                         <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Client Email *</label>
                         <input
@@ -1279,7 +1279,7 @@ export default function AdminPortal({
                       <Users className="w-3.5 h-3.5 text-blue-600" />
                       Responsible Guarantor & Representative Details
                     </h4>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Guarantor Name</label>
                         <input
@@ -1303,7 +1303,7 @@ export default function AdminPortal({
                         </select>
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4 mt-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
                       <div>
                         <label className="block text-[10px] uppercase font-bold text-slate-400 mb-1">Guarantor Email</label>
                         <input
