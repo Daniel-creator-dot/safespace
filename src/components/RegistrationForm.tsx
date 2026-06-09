@@ -408,7 +408,7 @@ export default function RegistrationForm({
                             <span className="text-xs font-semibold text-slate-800">{course.name}</span>
                           </div>
                           <div className="flex items-center gap-2">
-                            <span className="text-xs font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">
+                            <span className="text-xs font-sans font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">
                               +GH₵{course.cost}
                             </span>
                             <div className={`w-4 h-4 rounded-full border flex items-center justify-center transition-colors ${
