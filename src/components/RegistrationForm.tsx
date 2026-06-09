@@ -727,8 +727,8 @@ export default function RegistrationForm({
                     <strong className="text-blue-600 font-mono text-lg">{registrationId}</strong>
                   </div>
                   <div className="flex justify-between items-center border-b border-slate-200 pb-3">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Advisory Quote</span>
-                    <span className="font-mono text-slate-700 font-bold">GH₵{calculatedTotal.toLocaleString()}</span>
+                    <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Elective Tuition Total</span>
+                    <span className="font-mono text-slate-700 font-bold">GH₵{coursesCost.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Review SLA</span>

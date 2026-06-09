@@ -2017,14 +2017,7 @@ export default function AdminPortal({
     <div className="space-y-8 animate-fadeIn">
       {/* Dynamic Program Category Tuition Fees Editor */}
       <div className="bg-white rounded-xl border border-slate-100 shadow-3xs p-6">
-        <div className="border-b border-slate-100 pb-4 mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div>
-            <h3 className="font-display font-semibold text-slate-800 text-sm font-sans flex items-center gap-1.5">
-              <DollarSign className="w-4 h-4 text-blue-600" />
-              Advisory Programs & Fee Structure Categories
-            </h3>
-            <p className="text-slate-400 text-xs font-sans mt-0.5">Live rates editor. Direct changes will update all registration screens immediately.</p>
-          </div>
+        <div className="border-b border-slate-100 pb-4 mb-4 flex justify-end">
           <button
             id="btn-open-add-program"
             onClick={() => setIsAddingProgramModalOpen(true)}
