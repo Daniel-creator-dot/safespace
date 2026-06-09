@@ -1031,7 +1031,11 @@ export default function AdminPortal({
                       'Rejected': 'bg-slate-100 text-slate-700 border-slate-200'
                     };
 
-                    const outstanding = student.outstandingFees;
+                    const electiveCost = student.courses?.reduce((sum, cName) => {
+                      const crs = predefinedCourses.find(c => c.name === cName);
+                      return sum + (crs ? crs.cost : 150);
+                    }, 0) || 0;
+                    const outstanding = Math.max(0, electiveCost - student.paidFees);
                     const isPaid = outstanding <= 0;
                     const isPartial = student.paidFees > 0 && outstanding > 0;
 
@@ -1626,18 +1630,29 @@ export default function AdminPortal({
 
                             {/* Totals section */}
                             <div className="space-y-1 bg-white p-3 rounded-lg border border-slate-100/60 text-left">
-                              <div className="flex justify-between text-[11px]">
-                                <span className="text-slate-400">Class Total Charges:</span>
-                                <span className="font-mono font-medium">GH₵{selectedStudent.totalFees.toLocaleString()}</span>
-                              </div>
-                              <div className="flex justify-between text-[11px] font-semibold border-b border-slate-205 pb-1">
-                                <span className="text-slate-400">Confirmed Payments:</span>
-                                <span className="font-mono text-emerald-600">-GH₵{selectedStudent.paidFees.toLocaleString()}</span>
-                              </div>
-                              <div className="flex justify-between font-extrabold text-blue-600 text-sm pt-1 uppercase">
-                                <span>Outstanding Net balance:</span>
-                                <span className="font-mono">GH₵{selectedStudent.outstandingFees.toLocaleString()}</span>
-                              </div>
+                              {(() => {
+                                const electiveCost = selectedStudent.courses?.reduce((sum, cName) => {
+                                  const crs = predefinedCourses.find(c => c.name === cName);
+                                  return sum + (crs ? crs.cost : 150);
+                                }, 0) || 0;
+                                const outstandingElective = Math.max(0, electiveCost - selectedStudent.paidFees);
+                                return (
+                                  <>
+                                    <div className="flex justify-between text-[11px]">
+                                      <span className="text-slate-400">Elective Tuition Charges:</span>
+                                      <span className="font-mono font-medium">GH₵{electiveCost.toLocaleString()}</span>
+                                    </div>
+                                    <div className="flex justify-between text-[11px] font-semibold border-b border-slate-205 pb-1">
+                                      <span className="text-slate-400">Confirmed Payments:</span>
+                                      <span className="font-mono text-emerald-600">-GH₵{selectedStudent.paidFees.toLocaleString()}</span>
+                                    </div>
+                                    <div className="flex justify-between font-extrabold text-blue-600 text-sm pt-1 uppercase">
+                                      <span>Elective Owed:</span>
+                                      <span className="font-mono">GH₵{outstandingElective.toLocaleString()}</span>
+                                    </div>
+                                  </>
+                                );
+                              })()}
                             </div>
                           </div>
                         ) : (
@@ -1645,20 +1660,29 @@ export default function AdminPortal({
                           <div className="p-5 space-y-5">
                             
                             {/* Visual metrics split */}
-                            <div className="grid grid-cols-3 gap-2 text-center text-[11px]">
-                              <div className="bg-slate-50 p-2 rounded-lg border border-slate-100">
-                                <span className="text-slate-400 block mb-0.5">Charged Cost</span>
-                                <strong className="font-mono font-bold text-slate-850 block">GH₵{selectedStudent.totalFees.toLocaleString()}</strong>
-                              </div>
-                              <div className="bg-emerald-50/40 p-2 rounded-lg border border-emerald-100 text-emerald-800">
-                                <span className="text-slate-400 block mb-0.5">Paid Billed</span>
-                                <strong className="font-mono font-bold block">GH₵{selectedStudent.paidFees.toLocaleString()}</strong>
-                              </div>
-                              <div className="bg-amber-50/40 p-2 rounded-lg border border-amber-100 text-amber-800">
-                                <span className="text-slate-400 block mb-0.5">Owed Out</span>
-                                <strong className="font-mono font-bold block">GH₵{selectedStudent.outstandingFees.toLocaleString()}</strong>
-                              </div>
-                            </div>
+                            {(() => {
+                              const electiveCost = selectedStudent.courses?.reduce((sum, cName) => {
+                                const crs = predefinedCourses.find(c => c.name === cName);
+                                return sum + (crs ? crs.cost : 150);
+                              }, 0) || 0;
+                              const outstandingElective = Math.max(0, electiveCost - selectedStudent.paidFees);
+                              return (
+                                <div className="grid grid-cols-3 gap-2 text-center text-[11px]">
+                                  <div className="bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                    <span className="text-slate-400 block mb-0.5">Elective Charged</span>
+                                    <strong className="font-mono font-bold text-slate-850 block">GH₵{electiveCost.toLocaleString()}</strong>
+                                  </div>
+                                  <div className="bg-emerald-50/40 p-2 rounded-lg border border-emerald-100 text-emerald-800">
+                                    <span className="text-slate-400 block mb-0.5">Paid Billed</span>
+                                    <strong className="font-mono font-bold block">GH₵{selectedStudent.paidFees.toLocaleString()}</strong>
+                                  </div>
+                                  <div className="bg-amber-50/40 p-2 rounded-lg border border-amber-100 text-amber-800">
+                                    <span className="text-slate-400 block mb-0.5">Elective Owed</span>
+                                    <strong className="font-mono font-bold block">GH₵{outstandingElective.toLocaleString()}</strong>
+                                  </div>
+                                </div>
+                              );
+                            })()}
 
                             {/* Previous history logs list */}
                             <div>
@@ -2015,68 +2039,6 @@ export default function AdminPortal({
 
   {activeAdminTab === 'settings' && (
     <div className="space-y-8 animate-fadeIn">
-      {/* Dynamic Program Category Tuition Fees Editor */}
-      <div className="bg-white rounded-xl border border-slate-100 shadow-3xs p-6">
-        <div className="border-b border-slate-100 pb-4 mb-4 flex justify-end">
-          <button
-            id="btn-open-add-program"
-            onClick={() => setIsAddingProgramModalOpen(true)}
-            className="self-start sm:self-auto flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-lg text-xs transition cursor-pointer"
-          >
-            <Plus className="w-3.5 h-3.5" />
-            Add Advisory Program
-          </button>
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="w-full text-left font-sans border-collapse text-xs">
-            <thead>
-              <tr className="bg-slate-50 text-slate-500 font-semibold uppercase tracking-wider border-b border-slate-100">
-                <th className="px-4 py-3">Program Grade level</th>
-                <th className="px-4 py-3 text-right">Base Tuition</th>
-                <th className="px-4 py-3 text-right">Assessment</th>
-                <th className="px-4 py-3 text-right">Design Audit</th>
-                <th className="px-4 py-3 text-right">Reg Fee</th>
-                <th className="px-4 py-3 text-right">Total Fee</th>
-                <th className="px-4 py-3 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 text-slate-750">
-              {gradeFees.map((fee) => {
-                const rowSum = fee.tuitionFee + fee.activityFee + fee.facilitiesFee + fee.registrationFee;
-
-                return (
-                  <tr key={fee.gradeLevel} className="hover:bg-slate-50/50 transition">
-                    <td className="px-4 py-3.5 font-semibold text-slate-800">
-                      {fee.gradeLevel}
-                    </td>
-                    <td className="px-4 py-3.5 text-right font-mono text-slate-750">GH₵{fee.tuitionFee.toLocaleString()}</td>
-                    <td className="px-4 py-3.5 text-right font-mono text-slate-750">GH₵{fee.activityFee.toLocaleString()}</td>
-                    <td className="px-4 py-3.5 text-right font-mono text-slate-750">GH₵{fee.facilitiesFee.toLocaleString()}</td>
-                    <td className="px-4 py-3.5 text-right font-mono text-slate-750">GH₵{fee.registrationFee.toLocaleString()}</td>
-                    <td className="px-4 py-3.5 text-right font-mono font-bold text-slate-900">GH₵{rowSum.toLocaleString()}</td>
-                    <td className="px-4 py-3.5 text-center">
-                      <button
-                        onClick={() => {
-                          setEditingGradeLevel(fee.gradeLevel);
-                          setEditTuition(String(fee.tuitionFee));
-                          setEditActivity(String(fee.activityFee));
-                          setEditFacilities(String(fee.facilitiesFee));
-                          setEditReg(String(fee.registrationFee));
-                        }}
-                        className="text-blue-600 hover:underline hover:text-blue-800 font-semibold cursor-pointer"
-                      >
-                        Edit Rate
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
       {/* Dynamic Predefined Courses/Modules Editor */}
       <div className="bg-white rounded-xl border border-slate-100 shadow-3xs p-6">
         <div className="border-b border-slate-100 pb-4 mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
