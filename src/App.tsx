@@ -4,10 +4,9 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Sparkles, GraduationCap, ShieldAlert, Award, FileSpreadsheet, PlusCircle, LayoutDashboard, Database, HelpCircle } from 'lucide-react';
+import { Sparkles, GraduationCap, PlusCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Student, GradeFeeStructure } from './types';
-import { INITIAL_STUDENTS, GRADE_FEES, PREDEFINED_COURSES } from './data';
 import RegistrationForm from './components/RegistrationForm';
 import AdminPortal from './components/AdminPortal';
 import { API_BASE_URL } from './config';
@@ -27,8 +26,14 @@ const parseStudentFromBackend = (s: any): Student => ({
   }))
 });
 
+const getInitialView = () => {
+  if (typeof window === 'undefined') return 'register';
+  const path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+  return path === '/admin' ? 'admin' : 'register';
+};
+
 export default function App() {
-  const [view, setView] = useState<'register' | 'admin'>('register');
+  const [view, setView] = useState<'register' | 'admin'>(getInitialView);
   const [students, setStudents] = useState<Student[]>([]);
   const [gradeFees, setGradeFees] = useState<GradeFeeStructure[]>([]);
   const [predefinedCourses, setPredefinedCourses] = useState<{ code: string; name: string; cost: number }[]>([]);
@@ -204,6 +209,22 @@ export default function App() {
 
   const pendingCount = students.filter(s => s.admissionStatus === 'Pending').length;
 
+  useEffect(() => {
+    const route = view === 'admin' ? '/admin' : '/';
+    if (window.location.pathname.replace(/\/+$/, '') !== route) {
+      window.history.replaceState(null, '', route);
+    }
+  }, [view]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+      setView(path === '/admin' ? 'admin' : 'register');
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center font-sans">
@@ -246,23 +267,6 @@ export default function App() {
               <PlusCircle className="w-3.5 h-3.5 text-blue-600" />
               Registration Form
             </button>
-            <button
-              id="nav-btn-admin"
-              onClick={() => setView('admin')}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold tracking-wide transition relative cursor-pointer ${
-                view === 'admin'
-                  ? 'bg-white text-blue-600 shadow-3xs'
-                  : 'text-slate-500 hover:text-slate-800'
-              }`}
-            >
-              <LayoutDashboard className="w-3.5 h-3.5 text-blue-600" />
-              Admin Portal
-              {pendingCount > 0 && (
-                <span className="absolute -top-1 -right-1 min-w-[16px] h-4 bg-yellow-400 text-slate-900 text-[9px] font-bold rounded-full flex items-center justify-center px-1 animate-pulse">
-                  {pendingCount}
-                </span>
-              )}
-            </button>
           </nav>
         </div>
       </header>
@@ -280,7 +284,6 @@ export default function App() {
             >
               <RegistrationForm 
                 onRegisterSubmit={handleRegisterSubmit} 
-                onNavigateToAdmin={() => setView('admin')}
                 gradeFees={gradeFees}
                 predefinedCourses={predefinedCourses}
               />

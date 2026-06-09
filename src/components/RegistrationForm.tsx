@@ -13,14 +13,12 @@ import { Student, StudentDocument, GradeFeeStructure } from '../types';
 
 interface RegistrationFormProps {
   onRegisterSubmit: (newStudent: Omit<Student, 'id' | 'registrationDate' | 'admissionStatus' | 'paidFees' | 'outstandingFees' | 'payments'>) => void;
-  onNavigateToAdmin: () => void;
   gradeFees: GradeFeeStructure[];
   predefinedCourses: { code: string; name: string; cost: number }[];
 }
 
 export default function RegistrationForm({ 
   onRegisterSubmit, 
-  onNavigateToAdmin,
   gradeFees,
   predefinedCourses
 }: RegistrationFormProps) {
