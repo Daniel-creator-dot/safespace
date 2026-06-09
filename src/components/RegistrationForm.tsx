@@ -549,7 +549,7 @@ export default function RegistrationForm({
               </motion.div>
             )}
 
-            {/* STEP 3: Verification & Advisory Tuition Structures */}
+            {/* STEP 3: Academic Modules & Elective Costing List */}
             {step === 3 && (
               <motion.div
                 key="step3"
@@ -562,9 +562,9 @@ export default function RegistrationForm({
                 <div className="border-b border-slate-100 pb-4">
                   <h2 className="text-xl font-display font-bold text-slate-800 flex items-center gap-2">
                     <CreditCard className="w-5 h-5 text-blue-600" />
-                    Advisory Fees Calculation & ID Verification Upload
+                    Academic Modules & Elective Costing List
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">Review your automated advisory plan fee quote and upload standard verification documents</p>
+                  <p className="text-xs text-slate-400 mt-1">Review your selected elective tuition fees and upload verification documents</p>
                 </div>
 
                 {/* Costs breakdown panel */}
@@ -572,11 +572,11 @@ export default function RegistrationForm({
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-blue-100/40 pb-4 mb-4">
                     <div>
                       <h3 className="font-display font-bold text-lg text-slate-900">Fee Summary Breakdown</h3>
-                      <p className="text-slate-500 text-xs">Summary of your selected modules and academic services</p>
+                      <p className="text-slate-500 text-xs">Summary of your selected elective tuition fees</p>
                     </div>
                     <div className="mt-2 md:mt-0 pt-2 border-t border-blue-100 md:border-t-0 md:pt-0 w-full md:w-auto text-left md:text-right">
-                      <span className="text-xs text-slate-500 uppercase tracking-wider block">Estimated Term Balance</span>
-                      <strong className="text-2xl font-bold font-mono text-blue-600">GH₵{calculatedTotal.toLocaleString()}</strong>
+                      <span className="text-xs text-slate-500 uppercase tracking-wider block">Estimated Elective Tuition</span>
+                      <strong className="text-2xl font-bold font-mono text-blue-600">GH₵{coursesCost.toLocaleString()}</strong>
                     </div>
                   </div>
 
