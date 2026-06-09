@@ -914,26 +914,6 @@ export default function AdminPortal({
           </div>
         </div>
 
-        {/* Metric 4 */}
-        <div className="bg-white p-5 rounded-xl border border-slate-100 shadow-3xs flex flex-col justify-between">
-          <div className="flex justify-between items-center mb-1">
-            <div className="flex items-center gap-1.5">
-              <DollarSign className="w-4 h-4 text-emerald-500" />
-              <span className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">Fees Rate</span>
-            </div>
-            <span className="text-xs font-mono font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">{stats.collectionPercent}%</span>
-          </div>
-          <div className="text-xs text-slate-500 gap-1 flex items-baseline">
-            <span className="font-bold text-sm text-slate-800">GH₵{stats.totalFeesCollected.toLocaleString()}</span>
-            <span>of GH₵{stats.totalFeesBilled.toLocaleString()}</span>
-          </div>
-          {/* Progress bar container */}
-          <div className="w-full bg-slate-100 h-1.5 rounded-full overflow-hidden mt-2">
-            <div className="bg-emerald-500 h-full rounded-full transition-all" style={{ width: `${stats.collectionPercent}%` }}></div>
-          </div>
-        </div>
-      </div>
-
       {/* FILTER CONTROLS GRID */}
       <div className="bg-white p-4 rounded-xl border border-slate-100 shadow-3xs mb-6 grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
         {/* Search */}
